@@ -81,7 +81,25 @@ namespace FinalProject
                         }
                     }
                     else if (choice == "3")
-                    {}
+                    {
+                        var db = new Northwind22RCJContext();
+                        var query = db.Categories.Include("Products").OrderBy(p => p.CategoryId);
+                        foreach (var item in query)
+                        {
+                            Console.WriteLine($"{item.CategoryName}");
+                            foreach (Product p in item.Products)
+                            {
+                                if(p.Discontinued == true)
+                                {
+
+                                } else if(p.Discontinued == false)
+                                {
+                                Console.WriteLine($"\t{p.ProductName}");
+                                }
+                                
+                            }
+                        }
+                    }
                     else if (choice == "4")
                     {}
                     else if (choice == "5")

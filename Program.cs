@@ -39,7 +39,19 @@ namespace FinalProject
 
                     logger.Info($"Option {choice} selected");
                     if (choice == "1")
-                    {}
+                    {
+                        var db = new Northwind22RCJContext();
+                        var query = db.Categories.OrderBy(p => p.CategoryName);
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"{query.Count()} records returned");
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        foreach (var item in query)
+                        {
+                            Console.WriteLine($"{item.CategoryName} - {item.Description}");
+                        }
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
                     else if (choice == "2")
                     {}
                     else if (choice == "3")
@@ -60,6 +72,7 @@ namespace FinalProject
                     {}
                     else if (choice == "11")
                     {}
+                    logger.Info($"Option {choice} finished");
                     Console.WriteLine();                    
 
                 } while (choice.ToLower() != "q");

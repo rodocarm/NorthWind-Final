@@ -89,19 +89,46 @@ namespace FinalProject
                             Console.WriteLine($"{item.CategoryName}");
                             foreach (Product p in item.Products)
                             {
-                                if(p.Discontinued == true)
-                                {
-
-                                } else if(p.Discontinued == false)
+                                if(p.Discontinued == false)
                                 {
                                 Console.WriteLine($"\t{p.ProductName}");
                                 }
-                                
+ 
                             }
                         }
                     }
                     else if (choice == "4")
-                    {}
+                    {   
+
+                        var db = new Northwind22RCJContext();
+                        Console.WriteLine("1) Display All Products");
+                        Console.WriteLine("2) Display Discontinued Products");
+                        Console.WriteLine("3) Display Active Products");
+                        string option = Console.ReadLine();
+
+                        var query = db.Products.OrderBy(p => p.ProductName);
+                        foreach( var item in query)
+                        {
+                            if(option == "1")
+                            {
+                                Console.WriteLine($"\t{item.ProductName}");
+                            }
+                            else if(option == "2")
+                            {
+                                if(item.Discontinued == true)
+                                {
+                                    Console.WriteLine($"\t{item.ProductName}");
+                                }
+                            }
+                            else if(option == "3")
+                            {
+                                if(item.Discontinued == false)
+                                {
+                                    Console.WriteLine($"\t{item.ProductName}");
+                                }
+                            }
+                        }
+                    }
                     else if (choice == "5")
                     {}
                     else if (choice == "6")

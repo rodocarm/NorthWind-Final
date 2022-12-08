@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 
 #nullable disable
 
-namespace NorthWind_Console.Model
+namespace FinalProject.Model
 {
     public partial class Northwind22RCJContext : DbContext
     {

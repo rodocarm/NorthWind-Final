@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace NorthWind_Console.Model
+namespace FinalProject.Model
 {
     public partial class Product
     {

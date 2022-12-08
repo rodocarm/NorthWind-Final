@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
-namespace NorthWind_Console.Model
+namespace FinalProject.Model
 {
     public partial class Category
     {

@@ -2,12 +2,12 @@ using System;
 using NLog.Web;
 using System.IO;
 using System.Linq;
-using NorthWind_Console.Model;
+using FinalProject.Model;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
-namespace NorthWind_Console
+namespace FinalProject
 {
     class Program
     {
@@ -22,24 +22,45 @@ namespace NorthWind_Console
                 string choice;
                 do
                 {
-                    Console.WriteLine("1) Add Product");
-                    Console.WriteLine("2) Edit Product");
-                    Console.WriteLine("3) Display all Products");
-                    Console.WriteLine("4) Display a Specific Product");
+                    Console.WriteLine("1) Display Categories");
+                    Console.WriteLine("2) Display Category and related products");
+                    Console.WriteLine("3) Display all Categories and their related products");
+                    Console.WriteLine("4) Display Products");
+                    Console.WriteLine("5) Display Specific Product");
+                    Console.WriteLine("6) Add Category");
+                    Console.WriteLine("7) Add Product");
+                    Console.WriteLine("8) Edit Category");
+                    Console.WriteLine("9) Edit Product");
+                    Console.WriteLine("10) Delete Category Record");
+                    Console.WriteLine("11) Delete Product Record");
                     Console.WriteLine("\"q\" to quit");
                     choice = Console.ReadLine();
                     Console.Clear();
 
                     logger.Info($"Option {choice} selected");
                     if (choice == "1")
-                    { }
+                    {}
                     else if (choice == "2")
-                    { }
+                    {}
                     else if (choice == "3")
-                    { }
+                    {}
                     else if (choice == "4")
-                    { }
-                    Console.WriteLine();
+                    {}
+                    else if (choice == "5")
+                    {}
+                    else if (choice == "6")
+                    {}
+                    else if (choice == "7")
+                    {}
+                    else if (choice == "8")
+                    {}
+                    else if (choice == "9")
+                    {}
+                    else if (choice == "10")
+                    {}
+                    else if (choice == "11")
+                    {}
+                    Console.WriteLine();                    
 
                 } while (choice.ToLower() != "q");
             }

@@ -132,7 +132,39 @@ namespace FinalProject
                     else if (choice == "5")
                     {}
                     else if (choice == "6")
-                    {}
+ {
+                        Category category = new Category();
+                        Console.WriteLine("Enter Category Name:");
+                        category.CategoryName = Console.ReadLine();
+                        Console.WriteLine("Enter the Category Description:");
+                        category.Description = Console.ReadLine();
+
+                        ValidationContext context = new ValidationContext(category, null, null);
+                        List<ValidationResult> results = new List<ValidationResult>();
+
+                        var isValid = Validator.TryValidateObject(category, context, results, true);
+                        if (isValid)
+                        {
+                            var db = new Northwind22RCJContext();
+                            // check for unique name
+                            if (db.Categories.Any(c => c.CategoryName == category.CategoryName))
+                            {
+                                // generate validation error
+                                isValid = false;
+                                results.Add(new ValidationResult("Name exists", new string[] { "CategoryName" }));
+                            }
+                            else
+                            {
+                                logger.Info("Validation passed");
+                            }                        }
+                        if (!isValid)
+                        {
+                            foreach (var result in results)
+                            {
+                                logger.Error($"{result.MemberNames.First()} : {result.ErrorMessage}");
+                            }
+                        }
+                    }
                     else if (choice == "7")
                     {}
                     else if (choice == "8")

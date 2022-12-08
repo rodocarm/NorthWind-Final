@@ -53,7 +53,33 @@ namespace FinalProject
                         Console.ForegroundColor = ConsoleColor.White;
                     }
                     else if (choice == "2")
-                    {}
+                    {
+                        var db = new Northwind22RCJContext();
+                        var query = db.Categories.OrderBy(p => p.CategoryId);
+
+                        Console.WriteLine("Select the category whose products you want to display:");
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        foreach (var item in query)
+                        {
+                            Console.WriteLine($"{item.CategoryId}) {item.CategoryName}");
+                        }
+                        Console.ForegroundColor = ConsoleColor.White;
+                        int id = int.Parse(Console.ReadLine());
+                        Console.Clear();
+                        logger.Info($"CategoryId {id} selected");
+                        Category category = db.Categories.Include("Products").FirstOrDefault(c => c.CategoryId == id);
+                        Console.WriteLine($"{category.CategoryName} - {category.Description}");
+                        foreach (Product p in category.Products)
+                        {
+                            if (p.Discontinued == true)
+                            {
+                                
+                            } else if (p.Discontinued == false)
+                            {
+                            Console.WriteLine(p.ProductName);
+                            }
+                        }
+                    }
                     else if (choice == "3")
                     {}
                     else if (choice == "4")

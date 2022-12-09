@@ -229,9 +229,37 @@ namespace FinalProject
                         }
                     }
                     else if (choice == "8")
-                    {}
+                    {
+                        Console.WriteLine("Choose the Category you would like to edit");
+                        var db = new Northwind22RCJContext();
+                        var category = GetCategory(db);
+                        if(category != null)
+                        {
+                            Category  updatedCategory = InputCategory(db);
+                            if(updatedCategory != null)
+                            {
+                                updatedCategory.CategoryId = category.CategoryId;
+                                db.EditCategory(updatedCategory);
+                                logger.Info($"Category: {category.CategoryName} updated");
+                            }
+                        }
+                    }
                     else if (choice == "9")
-                    {}
+                    {
+                        Console.WriteLine("Choose the Product you would like to edit");
+                        var db = new Northwind22RCJContext();
+                        var product = GetProduct(db);
+                        if(product != null)
+                        {
+                            Product updatedProduct = InputProduct(db);
+                            if(updatedProduct != null)
+                            {
+                                updatedProduct.ProductId = product.ProductId;
+                                db.EditProduct(updatedProduct);
+                                logger.Info($"Product {product.ProductName} updated");
+                            }
+                        }
+                    }
                     else if (choice == "10")
                     {
                         Console.WriteLine("Choose the Category you would like to delete");
@@ -313,5 +341,81 @@ namespace FinalProject
             logger.Error("Invalid ProductId");
             return null;
         }
+
+        public static Category InputCategory(Northwind22RCJContext db)
+        {
+            Category category = new Category();
+                        Console.WriteLine("Enter Category Name:");
+                        var catName = category.CategoryName = Console.ReadLine();
+                        Console.WriteLine("Enter the Category Description:");
+                        var catDescription = category.Description = Console.ReadLine();
+                        
+
+                        ValidationContext context = new ValidationContext(category, null, null);
+                        List<ValidationResult> results = new List<ValidationResult>();
+
+                        var isValid = Validator.TryValidateObject(category, context, results, true);
+                        if(isValid)
+                        {
+                            return category;
+                        }
+                        else
+                        {
+                            foreach (var result in results)
+                            {
+                                logger.Error($"{result.MemberNames.First()} : {result.ErrorMessage}");
+                            }
+                        }
+                        return null;
+                    }
+
+
+        public static Product InputProduct(Northwind22RCJContext db)
+        { Product product = new Product();
+                        Console.WriteLine("Enter Product Name: ");
+                        product.ProductName = Console.ReadLine();
+                        Console.WriteLine("Enter Product Supplier ID: ");
+                        product.SupplierId = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Enter Product Category ID: ");
+                        product.CategoryId = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Enter Quantity Per Unit: ");
+                        product.QuantityPerUnit = Console.ReadLine();
+                        Console.WriteLine("Enter Product Unit Price: ");
+                        product.UnitPrice = Convert.ToDecimal(Console.ReadLine());
+                        Console.WriteLine("Enter Units In Stock: ");
+                        product.UnitsInStock = short.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter Units On Order: ");
+                        product.UnitsOnOrder = short.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter Recorder Level: ");
+                        product.ReorderLevel = short.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter If Product is Discontinued: ");
+                        Console.WriteLine("Enter Truth Or False: ");
+                        string dis = Console.ReadLine().ToLower();
+                        if(dis == "True")
+                        {
+                            product.Discontinued = true;
+                        }
+                        else if(dis == "false")
+                        {
+                            product.Discontinued = false;
+                        }
+
+                        ValidationContext context = new ValidationContext(product, null, null);
+                        List<ValidationResult> results = new List<ValidationResult>();
+
+                        var isValid = Validator.TryValidateObject(product, context, results, true);
+                        if(isValid)
+                        {
+                            return product;
+                        }
+                        else
+                        {
+                            foreach (var result in results)
+                            {
+                                logger.Error($"{result.MemberNames.First()} : {result.ErrorMessage}");
+                            }
+                        }
+                        return null;
+                    }
     }
 }

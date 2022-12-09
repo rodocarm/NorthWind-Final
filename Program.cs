@@ -233,9 +233,30 @@ namespace FinalProject
                     else if (choice == "9")
                     {}
                     else if (choice == "10")
-                    {}
+                    {
+                        Console.WriteLine("Choose the Category you would like to delete");
+                        var db = new Northwind22RCJContext();
+                        var category = GetCategory(db);
+                        if (category != null)
+                        {
+                            db.DeleteCategory(category);
+                            logger.Info($"Category {category.CategoryName} deleted");
+                        }
+                        
+
+                        
+                    }
                     else if (choice == "11")
-                    {}
+                    {
+                        Console.WriteLine("Choose the Product you would like to delete");
+                        var db = new Northwind22RCJContext();
+                        var product = GetProduct(db);
+                        if(product != null)
+                        {
+                            db.DeleteProduct(product);
+                            logger.Info($"Product {product.ProductName} deleted");
+                        }                        
+                    }
                     logger.Info($"Option {choice} finished");
                     Console.WriteLine();                    
 
@@ -247,6 +268,50 @@ namespace FinalProject
             }
 
             logger.Info("Program ended");
+        }
+
+
+        public static Category GetCategory(Northwind22RCJContext db)
+        {
+            var categories = db.Categories.OrderBy(p => p.CategoryId);
+            foreach(Category c in categories)
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine($"{c.CategoryId}: {c.CategoryName}");
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+            if(int.TryParse(Console.ReadLine(), out int CategoryId))
+            {
+                Category category = db.Categories.FirstOrDefault(c => c.CategoryId == CategoryId);
+                if(category != null)
+                {
+                    return category;
+                }
+            }
+            logger.Error("Invalid CategoryId");
+            return null;
+            
+        }
+
+        public static Product GetProduct(Northwind22RCJContext db)
+        {
+            var products = db.Products.OrderBy(p => p.ProductId);
+            foreach(Product p in products)
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine($"{p.ProductId}: {p.ProductName}");
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+            if(int.TryParse(Console.ReadLine(), out int ProductId))
+            {
+                Product product = db.Products.FirstOrDefault(p => p.ProductId == ProductId);
+                if(product != null)
+                {
+                    return product;
+                }
+            }
+            logger.Error("Invalid ProductId");
+            return null;
         }
     }
 }

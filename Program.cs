@@ -130,7 +130,24 @@ namespace FinalProject
                         }
                     }
                     else if (choice == "5")
-                    {}
+                    {
+                        Console.WriteLine("Choose the Product you would like to Look at");
+                        var db = new Northwind22RCJContext();
+                        var query = db.Products.OrderBy(p => p.ProductId);
+                        foreach( var item in query)
+                        {
+                                Console.WriteLine($"{item.ProductId}) {item.ProductName}");
+                        }
+                        int find = Convert.ToInt32(Console.ReadLine());
+                        foreach(var item in query)
+                        {
+                            if(item.ProductId == find)
+                            {
+                                Console.WriteLine($"ID: {item.ProductId}\nName: {item.ProductName}\nSupplier ID: {item.SupplierId}\nCategory ID: {item.QuantityPerUnit}\nUnit Price: {item.UnitPrice}\nUnits On Order: {item.UnitsOnOrder}\nReorder Level: {item.ReorderLevel}\nDiscontinued: {item.Discontinued} ");
+                                logger.Info($"Product {item.ProductId} selected and Listed");
+                            }
+                        }
+                    }
                     else if (choice == "6")
  {
                         Category category = new Category();
